@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habit index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Habit index</h1>
+    </div>
+
+    <div class="container">
+        <div class="border-2">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>TimeSpent</th>
+                    <th>TimeStart</th>
+                    <th>TimeEnd</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for habit in habits %}
+                    <tr>
+                        <td>{{ habit.id }}</td>
+                        <td>{{ habit.Name }}</td>
+                        <td>{{ habit.TimeSpent }}</td>
+                        <td>{{ habit.TimeStart ? habit.TimeStart|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_habit_show', {'id': habit.id}) }}">show</a>
+                            <a href="{{ path('app_habit_edit', {'id': habit.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No habits added yet</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

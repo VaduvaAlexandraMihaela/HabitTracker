@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Habit{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Habit</h1>
+
+    {{ include('habit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_habit_index') }}">back to list</a>
+
+    {{ include('habit/_delete_form.html.twig') }}
+{% endblock %}

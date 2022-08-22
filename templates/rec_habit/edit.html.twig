@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RecHabit{% endblock %}
+
+{% block body %}
+    <h1>Edit RecHabit</h1>
+
+    {{ include('rec_habit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_rec_habit_index') }}">back to list</a>
+
+    {{ include('rec_habit/_delete_form.html.twig') }}
+{% endblock %}

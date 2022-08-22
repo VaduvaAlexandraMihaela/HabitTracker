@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -26,6 +28,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string')]
     private $password;
+
+    #[ORM\OneToMany(mappedBy: 'UserId', targetEntity: Habit::class, orphanRemoval: true)]
+    private $habits;
+
+    public function __construct()
+    {
+        $this->habits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,5 +105,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Habit>
+     */
+    public function getHabits(): Collection
+    {
+        return $this->habits;
+    }
+
+    public function addHabit(Habit $habit): self
+    {
+        if (!$this->habits->contains($habit)) {
+            $this->habits[] = $habit;
+            $habit->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHabit(Habit $habit): self
+    {
+        if ($this->habits->removeElement($habit)) {
+            // set the owning side to null (unless already changed)
+            if ($habit->getUserId() === $this) {
+                $habit->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }

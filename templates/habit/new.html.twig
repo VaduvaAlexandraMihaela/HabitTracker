@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Habit{% endblock %}
+
+{% block body %}
+    <h1>Add new Habit</h1>
+
+    {{ include('habit/_form.html.twig') }}
+
+    <a href="{{ path('app_habit_index') }}">back to list</a>
+{% endblock %}

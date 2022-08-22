@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habit statistics{% endblock %}
+
+{% block body %}
+
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+
+    <script>
+         var xValues = [];
+         var yValues = [];
+        {% for name in names %}
+         xValues.push("{{ name }}");
+        {% endfor %}
+         {% for duration in durations %}
+         yValues.push({{ duration }});
+         {% endfor %}
+        var barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145"
+        ];
+
+
+         new Chart("myChart", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Habits statistics"
+                }
+            }
+        });
+    </script>
+
+{% endblock %}
