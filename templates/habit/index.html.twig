@@ -14,9 +14,7 @@
         <nav class="navbar-dark  bg-dark">
             <div class="input-group" >
                 <div class="input-group-append">
-                    <img src="{{ asset('./templates/calendar_icon.png') }}" alt="logo">
-                    <a class="btn btn-secondary" href="{{ path('app_habit_new') }}">Add new habit</a>
-                    <a class="btn btn-secondary" href="{{ path('app_habit_index_week_last') }}">See last week habits</a>
+                    <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
                 </div>
             </div>
         </nav>
@@ -52,19 +50,19 @@
                                     </div>
                                     <span class="text-muted">{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }} </span>
                                 </li>
-                            </ul>
                                 <div class="card p-3">
                                     <div class="input-group">
                                         <div class="input-group-append">
-                                            <button class="btn btn-secondary"><a href="{{ path('app_habit_show', {'id': habit.id}) }}">See details </a></button>
+                                            <a class="btn btn-secondary" href="{{ path('app_habit_show', {'id': habit.id}) }}">See details </a>
                                         </div>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-append">
-                                            <button class="btn btn-secondary"><a href="{{ path('app_habit_edit', {'id': habit.id}) }}">Edit habit</a></button>
+                                            <a class="btn btn-secondary" href="{{ path('app_habit_edit', {'id': habit.id}) }}">Edit habit</a>
                                         </div>
                                     </div>
                                 </div>
+                            </ul>
                             {% else %}
                             <div class="input-group">
                                 <div class="input-group-append">
@@ -104,30 +102,31 @@
                                     </div>
                                     <span class="text-muted">{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }} </span>
                                 </li>
+                                <div class="card p-3">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <a class="btn btn-secondary" href="{{ path('app_habit_show', {'id': habit.id}) }}">See details </a>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                           <a class="btn btn-secondary" href="{{ path('app_habit_edit', {'id': habit.id}) }}">Edit habit</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </ul>
-                            <div class="card p-3">
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-secondary"><a href="{{ path('app_habit_show', {'id': habit.id}) }}">See details </a></button>
-                                    </div>
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-secondary"><a href="{{ path('app_habit_edit', {'id': habit.id}) }}">Edit habit</a></button>
-                                    </div>
-                                </div>
-                            </div>
                             {% else %}
                                 <div class="input-group">
                                     <div class="input-group-append">
-                                        <h6 class="my-0"> No habits added for yesterday </h6>
+                                        <h6 class="my-0"> No habits added yesterday </h6>
                                     </div>
                                 </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-
+                <a class="btn btn-secondary" style="border-bottom: 50px" href="{{ path('app_habit_new') }}">Add new habit</a>
+                <a class="btn btn-secondary" href="{{ path('app_habit_index_week_last') }}">See last week habits</a>
         </div>
     </div>
     </main>

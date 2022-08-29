@@ -3,10 +3,16 @@
 {% block title %}Habit statistics{% endblock %}
 
 {% block body %}
+    <main role="main">
 
+    <div class="jumbotron">
+        <div class="container"></div>
+    </div>
+
+    <div class="container">
     <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 
-
+    </div>
     <script>
          var xValues = [];
          var yValues = [];
@@ -21,7 +27,8 @@
             "#00aba9",
             "#2b5797",
             "#e8c3b9",
-            "#1e7145"
+            "#1e7145",
+            "#bb5780"
         ];
 
 

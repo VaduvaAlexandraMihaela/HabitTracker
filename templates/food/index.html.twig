@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Food index{% endblock %}
+
+{% block body %}
+
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container"></div>
+    </div>
+
+    <div class="container">
+        <nav class="navbar-dark  bg-dark">
+            <div class="input-group" >
+                <div class="input-group-append">
+                    <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+                </div>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Food index</h1>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+{#                        <th>Name</th>#}
+                        <th>Calories</th>
+                        <th>TimeStamp</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for calorieByDate in caloriesByDate %}
+                        <tr>
+                            {% for key,value in calorieByDate %}
+                                     <td>{{ key }}</td>
+                                     <td>{{ value.TimeStamp ? value.TimeStamp|date('Y-m-d') : '' }}</td>
+                                     <td>
+                                         <table class="table">
+                                             <thead>
+                                             <tr>
+                                                 <th>Name</th>
+                                                 <th>Calories</th>
+                                             </tr>
+                                             </thead>
+                                             <tbody>
+                                              {% for food in foods %}
+                                                {% if (value.TimeStamp|date('Y-m-d')) == (food.TimeStamp|date('Y-m-d')) %}
+                                                <tr>
+                                                    <td>
+                                                     {{ food.Name }}
+                                                    </td>
+                                                    <td>
+                                                     {{ food.Calories }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ path('app_food_show', {'id': food.id}) }}">show</a>
+                                                        <a href="{{ path('app_food_edit', {'id': food.id}) }}">edit</a>
+                                                    </td>
+                                                </tr>
+                                             {% endif %}
+                                             {% endfor %}
+                                             </tbody>
+                                         </table>
+                                     </td>
+                            {% endfor %}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_food_new') }}">Create new</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

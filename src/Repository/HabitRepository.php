@@ -29,6 +29,8 @@ class HabitRepository extends ServiceEntityRepository
 
     public function add(Habit $entity, RecHabitRepository $recHabitRepository, bool $flush = false): void
     {
+        $startTime = $entity->getTimeStart();
+
         $this->getEntityManager()->persist($entity);
         $recHabit = new RecHabit();
         $recHabit->setName($entity->getName());
@@ -72,8 +74,8 @@ class HabitRepository extends ServiceEntityRepository
         foreach($habits as $habit){
             $timeStart = $habit->getTimeStart();
             $today = new DateTime('now');
-            if(date_diff($timeStart,$today)->format('%d') == 1){
-                array_push($habitsLastWeek,$habit);
+            if(date_diff($timeStart,$today)->format('%d') == 0){
+                array_push($habitsToday,$habit);
             }
         }
 
@@ -83,16 +85,16 @@ class HabitRepository extends ServiceEntityRepository
     public function getHabitsYesterday() : array
     {
         $habits = $this->findAll();
-        $habitsToday = array();
+        $habitsYesterday = array();
         foreach($habits as $habit){
             $timeStart = $habit->getTimeStart();
             $today = new DateTime('now');
             if(date_diff($timeStart,$today)->format('%d') == 1){
-                array_push($habitsLastWeek,$habit);
+                array_push($habitsYesterday,$habit);
             }
         }
 
-        return $habitsToday;
+        return $habitsYesterday;
     }
 
 

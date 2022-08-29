@@ -3,36 +3,55 @@
 {% block title %}Habit{% endblock %}
 
 {% block body %}
-    <h1>Habit</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="input-group-append">
+                <img src="{{ asset('../img/habit-banner.png') }}" alt="logo">
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ habit.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ habit.Name }}</td>
-            </tr>
-            <tr>
-                <th>TimeSpent</th>
-                <td>{{ habit.TimeSpent }}</td>
-            </tr>
-            <tr>
-                <th>TimeStart</th>
-                <td>{{ habit.TimeStart ? habit.TimeStart|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TimeEnd</th>
-                <td>{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="jumbotron">
+   <h4 class="mb-3">View details of {{ habit.Name }}</h4>
+    <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Habit</h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Habit Name</h6>
+                        </div>
+                        <span class="text-muted">{{ habit.Name }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time Spent</h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeSpent }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time Start</h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeStart ? habit.TimeStart|date('Y-m-d H:i:s') : '' }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time End</h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }} </span>
+                    </li>
+                    {{ include('habit/_delete_form.html.twig') }}
+                </ul>
+                <a  class="btn btn-secondary" href="{{ path('app_habit_index') }}">back to list</a>
 
-    <a href="{{ path('app_habit_index') }}">back to list</a>
+                <a class="btn btn-secondary" href="{{ path('app_habit_edit', {'id': habit.id}) }}">edit</a>
 
-    <a href="{{ path('app_habit_edit', {'id': habit.id}) }}">edit</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    {{ include('habit/_delete_form.html.twig') }}
 {% endblock %}

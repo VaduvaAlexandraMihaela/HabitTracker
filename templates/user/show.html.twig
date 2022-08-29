@@ -3,32 +3,40 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="jumbotron">
+        <h4 class="mb-3">View details of your profile</h4>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-3">Your account</h4>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0"> Email</h6>
+                            </div>
+                            <span class="text-muted">{{ user.email }} </span>
+                    </ul>
+                    <h6 class="my-0">Delete your profile</h6> {{ include('user/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-secondary" href="{{ path('app_habit_index') }}">back to Home</a>
+    </div>
+{#    <h1>User</h1>#}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+{#    <table class="table">#}
+{#        <tbody>#}
+{#            <tr>#}
+{#                <th>Email</th>#}
+{#                <td>{{ user.email }}</td>#}
+{#            </tr>#}
+{#        </tbody>#}
+{#    </table>#}
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+{#    <a href="{{ path('app_user_index') }}">back to list</a>#}
 
-    {{ include('user/_delete_form.html.twig') }}
+{#    <a href="{{ path('app_user_edit', {'id': app.user.id}) }}">edit</a>#}
+
+{#   <h2>Delete your profile</h2> {{ include('user/_delete_form.html.twig') }}#}
 {% endblock %}

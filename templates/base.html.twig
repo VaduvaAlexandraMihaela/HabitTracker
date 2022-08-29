@@ -20,16 +20,18 @@
     </head>
     {% block header %}
 
+        {% if app.user %}
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#link">Habits</a>
+                    <a class="nav-link" href="{{ path('app_habit_index') }}">Habits</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#link">Statistics</a>
+                    <a class="nav-link" href="{{path('statistics_index')}}">Statistics</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#link">Recommendation</a>
+                    <a class="nav-link" href="{{ path('app_rec_habit_index_top') }}">Recommendation</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}">Profile</a>
@@ -44,6 +46,7 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </nav>
+        {% endif %}
 
     {% endblock %}
     <body>

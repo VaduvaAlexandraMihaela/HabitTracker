@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RecHabit index{% endblock %}
+
+{% block body %}
+    <h1>RecHabit index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>TimeStart</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rec_habit in rec_habits %}
+            <tr>
+                <td>{{ rec_habit.id }}</td>
+                <td>{{ rec_habit.Name }}</td>
+                <td>{{ rec_habit.Duration }}</td>
+                <td>{{ rec_habit.TimeStart ? rec_habit.TimeStart|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_rec_habit_edit', {'id': rec_habit.id}) }}">Add Habit for today</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

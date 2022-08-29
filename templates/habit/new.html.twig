@@ -3,9 +3,26 @@
 {% block title %}New Habit{% endblock %}
 
 {% block body %}
-    <h1>Add new Habit</h1>
 
-    {{ include('habit/_form.html.twig') }}
+    <main role="main">
+        <div class="jumbotron">
+            <div class="container"> <h1>Add new Habit to activities track</h1></div>
+        </div>
 
-    <a href="{{ path('app_habit_index') }}">back to list</a>
+        <div class="container">
+            <nav class="navbar-dark  bg-dark">
+                <div class="input-group" >
+                    <div class="input-group-append">
+                        <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+                    </div>
+                </div>
+            </nav>
+            <div class="jumbotron">
+                <div class="container">
+                    {{ include('habit/_form.html.twig') }}
+                </div>
+                <a class="btn btn-secondary" href="{{ path('app_habit_index') }}">back to list</a>
+            </div>
+        </div>
+    </main>
 {% endblock %}

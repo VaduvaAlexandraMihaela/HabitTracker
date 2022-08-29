@@ -32,9 +32,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'UserId', targetEntity: Habit::class, orphanRemoval: true)]
     private $habits;
 
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Food::class)]
+    private $food;
+
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Weight::class)]
+    private $weights;
+
     public function __construct()
     {
         $this->habits = new ArrayCollection();
+        $this->food = new ArrayCollection();
+        $this->weights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +139,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($habit->getUserId() === $this) {
                 $habit->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Food>
+     */
+    public function getFood(): Collection
+    {
+        return $this->food;
+    }
+
+    public function addFood(Food $food): self
+    {
+        if (!$this->food->contains($food)) {
+            $this->food[] = $food;
+            $food->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFood(Food $food): self
+    {
+        if ($this->food->removeElement($food)) {
+            // set the owning side to null (unless already changed)
+            if ($food->getUserId() === $this) {
+                $food->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Weight>
+     */
+    public function getWeights(): Collection
+    {
+        return $this->weights;
+    }
+
+    public function addWeight(Weight $weight): self
+    {
+        if (!$this->weights->contains($weight)) {
+            $this->weights[] = $weight;
+            $weight->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeight(Weight $weight): self
+    {
+        if ($this->weights->removeElement($weight)) {
+            // set the owning side to null (unless already changed)
+            if ($weight->getUserId() === $this) {
+                $weight->setUserId(null);
             }
         }
 
