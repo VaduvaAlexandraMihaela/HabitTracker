@@ -39,6 +39,22 @@ class WeightRepository extends ServiceEntityRepository
         }
     }
 
+    public function getWeightByUserId($userId)
+    {
+        $weight = $this->findBy(array('user_id' => $userId));
+        return $weight;
+    }
+
+    public function setCurrentWeight()
+    {
+
+    }
+
+    public function getCurrentWeight()
+    {
+
+    }
+
 //    /**
 //     * @return Weight[] Returns an array of Weight objects
 //     */

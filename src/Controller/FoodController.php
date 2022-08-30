@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Food;
 use App\Form\FoodType;
 use App\Repository\FoodRepository;
+use App\Repository\WeightRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +15,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class FoodController extends AbstractController
 {
     #[Route('/', name: 'app_food_index', methods: ['GET'])]
-    public function index(FoodRepository $foodRepository): Response
+    public function index(FoodRepository $foodRepository, WeightRepository $weightRepository): Response
     {
-        return $this->render('food/index.html.twig', [
-            'caloriesByDate' => $foodRepository->getTotalCaloriesByDate(),
-            'foods' => $foodRepository->findAll()
-        ]);
+        $userId = $this->getUser();
+        $caloriesByDate = $foodRepository->getTotalCaloriesByDate($userId);
+        $foods = $foodRepository->findAll();
+        $weight =  $weightRepository->getWeightByUserId($userId);
+        if( count($caloriesByDate) > 0 && count($foods) > 0 && count($weight) > 0){
+            return $this->render('food/index.html.twig', [
+                'caloriesByDate' => $foodRepository->getTotalCaloriesByDate($userId),
+                'foods' => $foodRepository->findAll(),
+                'weight' => $weightRepository->getWeightByUserId($userId)
+            ]);
+        }else{
+            return $this->redirectToRoute('app_weight_new', [], Response::HTTP_SEE_OTHER);
+        }
     }
 
     #[Route('/new', name: 'app_food_new', methods: ['GET', 'POST'])]

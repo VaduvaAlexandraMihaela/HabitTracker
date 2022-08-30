@@ -46,23 +46,15 @@ class FoodRepository extends ServiceEntityRepository
         return strtotime($date1->getTimeStamp()->format('%d')) - strtotime($date2->getTimeStamp()->format('%d'));
     }
 
-    public function getAllFoodsByDate($date): array
+    public function getAllFoodsByUserId($userId) : array
     {
-        $foods = $this->findAll();
-
-        $arrayByDate = array();
-        foreach($foods as $food){
-            if(date_diff($date,$food->getTimeStamp())->format('%d') == 0){
-                array_push($arrayByDate,$food);
-            }
-        }
-
-        return $arrayByDate;
+        $foods = $this->findBy(array('user_id' => $userId));
+        return $foods;
     }
 
-    public function getTotalCaloriesByDate() : array
+    public function getTotalCaloriesByDate($userId) : array
     {
-        $foods = $this->findAll();
+        $foods = $this->getAllFoodsByUserId($userId);
         $totalCalories = 0;
         $allCalories = array();
         foreach($foods as $food){

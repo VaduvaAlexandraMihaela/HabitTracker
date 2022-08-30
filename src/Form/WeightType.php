@@ -15,7 +15,6 @@ class WeightType extends AbstractType
             ->add('Value')
             ->add('WeightLost')
             ->add('Goal')
-            ->add('user_id')
         ;
     }
 

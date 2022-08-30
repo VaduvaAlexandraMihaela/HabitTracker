@@ -25,13 +25,16 @@ class WeightController extends AbstractController
     public function new(Request $request, WeightRepository $weightRepository): Response
     {
         $weight = new Weight();
+        $user = $this->getUser();
+        $weight->setUserId($user);
+        $weight->setWeightLost(0);
         $form = $this->createForm(WeightType::class, $weight);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $weightRepository->add($weight, true);
 
-            return $this->redirectToRoute('app_weight_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_food_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('weight/new.html.twig', [

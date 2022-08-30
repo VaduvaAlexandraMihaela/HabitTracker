@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Food index{% endblock %}
+{% block title %}Food calories tracking{% endblock %}
 
 {% block body %}
 
@@ -20,14 +20,20 @@
         </nav>
         <div class="jumbotron">
             <div class="container">
-                <h1>Food index</h1>
-
+                <h1>Food calories tracking</h1>
+                <div class="row">
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3">Weight : {{ weight[0].Value }}</h4>
+                        <h4 class="mb-3">Weight Lost : {{ weight[0].WeightLost }}</h4>
+                        <h4 class="mb-3">Goal :{{ weight[0].Goal }} </h4>
+                        <a class="btn btn-secondary" href="{{ path('app_weight_edit', {'id': weight[0].id}) }}">Update your weight</a>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
-{#                        <th>Name</th>#}
-                        <th>Calories</th>
-                        <th>TimeStamp</th>
+                        <th>Total Calories</th>
+                        <th>Day</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,32 +43,42 @@
                                      <td>{{ key }}</td>
                                      <td>{{ value.TimeStamp ? value.TimeStamp|date('Y-m-d') : '' }}</td>
                                      <td>
-                                         <table class="table">
-                                             <thead>
-                                             <tr>
-                                                 <th>Name</th>
-                                                 <th>Calories</th>
-                                             </tr>
-                                             </thead>
-                                             <tbody>
-                                              {% for food in foods %}
-                                                {% if (value.TimeStamp|date('Y-m-d')) == (food.TimeStamp|date('Y-m-d')) %}
-                                                <tr>
-                                                    <td>
-                                                     {{ food.Name }}
-                                                    </td>
-                                                    <td>
-                                                     {{ food.Calories }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ path('app_food_show', {'id': food.id}) }}">show</a>
-                                                        <a href="{{ path('app_food_edit', {'id': food.id}) }}">edit</a>
-                                                    </td>
-                                                </tr>
-                                             {% endif %}
-                                             {% endfor %}
-                                             </tbody>
-                                         </table>
+                                         <div class="row">
+                                             <div class="col-md-8 order-md-1">
+                                                 <h4 class="mb-3">Foods and calories</h4>
+                                             </div>
+                                         </div>
+                                         {% for food in foods %}
+                                             {% if (value.TimeStamp|date('Y-m-d')) == (food.TimeStamp|date('Y-m-d')) %}
+                                         <ul class="list-group mb-3">
+                                             <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                 <div>
+                                                     <h6 class="my-0"> Food </h6>
+                                                 </div>
+                                                 <span class="text-muted">{{ food.Name }} </span>
+                                             </li>
+                                             <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                 <div>
+                                                     <h6 class="my-0"> Calories </h6>
+                                                 </div>
+                                                 <span class="text-muted">{{ food.Calories }} </span>
+                                             </li>
+                                             <div class="card p-3">
+                                                 <div class="input-group">
+                                                     <div class="input-group-append">
+                                                         <a class="btn btn-secondary" href="{{ path('app_food_show', {'id': food.id}) }}">See details </a>
+                                                     </div>
+                                                 </div>
+                                                 <div class="input-group">
+                                                     <div class="input-group-append">
+                                                         <a class="btn btn-secondary" href="{{ path('app_food_edit', {'id': food.id}) }}">Edit food</a>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </ul>
+                                         {% endif %}
+                                         {% endfor %}
+                                     </td>
                                      </td>
                             {% endfor %}
                         </tr>
@@ -74,7 +90,7 @@
                     </tbody>
                 </table>
 
-                <a href="{{ path('app_food_new') }}">Create new</a>
+                <a class="btn btn-secondary" href="{{ path('app_food_new') }}">Add food</a>
             </div>
         </div>
     </div>

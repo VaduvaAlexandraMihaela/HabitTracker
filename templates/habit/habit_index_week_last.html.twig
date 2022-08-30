@@ -3,43 +3,76 @@
 {% block title %}Habit index{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Habit index</h1>
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container"></div>
     </div>
 
     <div class="container">
-        <div class="border-2">
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>TimeSpent</th>
-                    <th>TimeStart</th>
-                    <th>TimeEnd</th>
-                    <th>actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for habit in habits %}
-                    <tr>
-                        <td>{{ habit.id }}</td>
-                        <td>{{ habit.Name }}</td>
-                        <td>{{ habit.TimeSpent }}</td>
-                        <td>{{ habit.TimeStart ? habit.TimeStart|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>
-                            <a href="{{ path('app_habit_show', {'id': habit.id}) }}">show</a>
-                            <a href="{{ path('app_habit_edit', {'id': habit.id}) }}">edit</a>
-                        </td>
-                    </tr>
+        <nav class="navbar-dark  bg-dark">
+            <div class="input-group" >
+                <div class="input-group-append">
+                    <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+                </div>
+            </div>
+        </nav>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Activities last week</h4>
+
+                <ul class="list-group mb-3">
+                    {% for habit in habits %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Habit </h6>
+                        </div>
+                        <span class="text-muted">{{ habit.Name }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time Spent </h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeSpent }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time Start </h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeStart ? habit.TimeStart|date('Y-m-d H:i:s') : '' }} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> Time End </h6>
+                        </div>
+                        <span class="text-muted">{{ habit.TimeEnd ? habit.TimeEnd|date('Y-m-d H:i:s') : '' }} </span>
+                    </li>
+                    <div class="card p-3">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <a class="btn btn-secondary" href="{{ path('app_habit_show', {'id': habit.id}) }}">See details </a>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <a class="btn btn-secondary" href="{{ path('app_habit_edit', {'id': habit.id}) }}">Edit habit</a>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
                 {% else %}
-                    <tr>
-                        <td colspan="6">No habits added yet</td>
-                    </tr>
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <h6 class="my-0"> No habits found added last week </h6>
+                        </div>
+                    </div>
                 {% endfor %}
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
+</div>
+    </div>
+</main>
 {% endblock %}
