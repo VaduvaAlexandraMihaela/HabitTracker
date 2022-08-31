@@ -27,9 +27,13 @@ class HabitRepository extends ServiceEntityRepository
         parent::__construct($registry, Habit::class);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function add(Habit $entity, RecHabitRepository $recHabitRepository, bool $flush = false): void
     {
-        $startTime = $entity->getTimeStart();
+
+        $entity = $this->setTimeEndWithInterval($entity);
 
         $this->getEntityManager()->persist($entity);
         $recHabit = new RecHabit();
@@ -43,6 +47,18 @@ class HabitRepository extends ServiceEntityRepository
         }
     }
 
+    public function setTimeEndWithInterval($habit) : Habit{
+        $timeStart = $habit->getTimeStart();
+        $duration = $habit->getTimeSpent();
+        $minutes =  strval($duration);
+        $seconds = $minutes * 60;
+        $interval = new \DateInterval("PT" . $seconds . "S");
+        $timeEnd = $timeStart->add($interval);
+        $habit->setTimeEnd($timeEnd);
+
+        return $habit;
+    }
+
     public function remove(Habit $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -52,9 +68,9 @@ class HabitRepository extends ServiceEntityRepository
         }
     }
 
-    public function getHabitsLastWeek() : array
+    public function getHabitsLastWeek($userId) : array
     {
-        $habits = $this->findAll();
+        $habits = $this->getAllHabitsByUserId($userId);
         $habitsLastWeek = array();
         foreach($habits as $habit){
             $timeStart = $habit->getTimeStart();
@@ -67,9 +83,9 @@ class HabitRepository extends ServiceEntityRepository
         return $habitsLastWeek;
     }
 
-    public function getHabitsToday() : array
+    public function getHabitsToday($userId) : array
     {
-        $habits = $this->findAll();
+        $habits = $this->getAllHabitsByUserId($userId);
         $habitsToday = array();
         foreach($habits as $habit){
             $timeStart = $habit->getTimeStart();
@@ -82,9 +98,9 @@ class HabitRepository extends ServiceEntityRepository
         return $habitsToday;
     }
 
-    public function getHabitsYesterday() : array
+    public function getHabitsYesterday($userId) : array
     {
-        $habits = $this->findAll();
+        $habits = $this->getAllHabitsByUserId($userId);
         $habitsYesterday = array();
         foreach($habits as $habit){
             $timeStart = $habit->getTimeStart();
@@ -95,6 +111,12 @@ class HabitRepository extends ServiceEntityRepository
         }
 
         return $habitsYesterday;
+    }
+
+    public function getAllHabitsByUserId($userId) : array
+    {
+        $habits = $this->findBy(array('UserId' => $userId));
+        return $habits;
     }
 
 

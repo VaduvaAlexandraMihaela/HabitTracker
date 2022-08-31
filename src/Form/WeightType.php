@@ -12,9 +12,13 @@ class WeightType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Value')
+            ->add('Value',null, [
+                'required'   => true
+            ])
             ->add('WeightLost')
-            ->add('Goal')
+            ->add('Goal',null, [
+                'required'   => true
+            ])
         ;
     }
 

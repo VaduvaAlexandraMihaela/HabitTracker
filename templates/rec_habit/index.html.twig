@@ -3,37 +3,53 @@
 {% block title %}RecHabit index{% endblock %}
 
 {% block body %}
-    <h1>RecHabit index</h1>
+<main role="main">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>TimeStart</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for rec_habit in rec_habits %}
-            <tr>
-                <td>{{ rec_habit.id }}</td>
-                <td>{{ rec_habit.Name }}</td>
-                <td>{{ rec_habit.Duration }}</td>
-                <td>{{ rec_habit.TimeStart ? rec_habit.TimeStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_rec_habit_show', {'id': rec_habit.id}) }}">show</a>
-                    <a href="{{ path('app_rec_habit_edit', {'id': rec_habit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="jumbotron">
+        <div class="container"></div>
+    </div>
+<div class="container">
+    <nav class="navbar-dark  bg-dark">
+        <div class="input-group" >
+            <div class="input-group-append">
+                <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-3">Recommendations</h4>
+
+                    <ul class="list-group mb-3">
+                        {% for habit in rec_habits %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"> Habit </h6>
+                                </div>
+                                <span class="text-muted">{{ habit.Name }} </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"> Time Spent </h6>
+                                </div>
+                                <span class="text-muted">{{ habit.Duration }} minutes</span>
+                            </li>
+                        {% else %}
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <h6 class="my-0"> No records available </h6>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
 
     <a href="{{ path('app_rec_habit_new') }}">Create new</a>
 {% endblock %}

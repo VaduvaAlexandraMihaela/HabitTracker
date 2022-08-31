@@ -3,9 +3,27 @@
 {% block title %}New Weight{% endblock %}
 
 {% block body %}
-    <h1>Create new Weight</h1>
 
-    {{ include('weight/_form.html.twig') }}
+    <main role="main">
+        <div class="jumbotron">
+            <div class="container"> <h1>Add your weight information to access the fitness tracker functionalities</h1></div>
+        </div>
 
-    <a href="{{ path('app_weight_index') }}">back to list</a>
+        <div class="container">
+            <nav class="navbar-dark  bg-dark">
+                <div class="input-group" >
+                    <div class="input-group-append">
+                        <img src="{{ asset('../img/icon_calendar.png') }}" alt="logo">
+                    </div>
+                </div>
+            </nav>
+            <div class="jumbotron">
+                <div class="container">
+                    {{ include('weight/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </main>
+
+
 {% endblock %}

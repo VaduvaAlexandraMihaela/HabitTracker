@@ -18,10 +18,8 @@ class FoodController extends AbstractController
     public function index(FoodRepository $foodRepository, WeightRepository $weightRepository): Response
     {
         $userId = $this->getUser();
-        $caloriesByDate = $foodRepository->getTotalCaloriesByDate($userId);
-        $foods = $foodRepository->findAll();
         $weight =  $weightRepository->getWeightByUserId($userId);
-        if( count($caloriesByDate) > 0 && count($foods) > 0 && count($weight) > 0){
+        if(count($weight) > 0){
             return $this->render('food/index.html.twig', [
                 'caloriesByDate' => $foodRepository->getTotalCaloriesByDate($userId),
                 'foods' => $foodRepository->findAll(),

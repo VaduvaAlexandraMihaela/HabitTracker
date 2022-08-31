@@ -12,9 +12,15 @@ class FoodType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Name')
-            ->add('Calories')
-            ->add('TimeStamp')
+            ->add('Name',null, [
+                'required'   => true
+            ])
+            ->add('Calories',null, [
+                'required'   => true
+            ])
+            ->add('TimeStamp',null, [
+                'required'   => true
+            ])
         ;
     }
 

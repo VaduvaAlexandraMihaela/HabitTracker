@@ -9,17 +9,38 @@
         <div class="container"></div>
     </div>
 
+    <div class="jumbotron">
     <div class="container">
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
+    <div class="row">
+        {% if  namesToday|length and durationsToday|length %}
+        <canvas id="myChartToday" style="width:100%;max-width:600px"></canvas>
+        {% else %}
+            <a>No habits found for today</a>
+        {% endif %}
+        <div class="col-md-8 order-md-1">
+        {% if  namesYesterday|length and durationsYesterday|length %}
+        <canvas id="myChartYesterday" style="width:100%;max-width:600px"></canvas>
+        {% else %}
+            <a>No habits found for yesterday</a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="col-md-8 order-md-1">
+    </div>
+        {% if  namesLastWeek|length and durationsLastWeek|length %}
+        <canvas id="myChartLastWeek" style="width:100%;max-width:600px"></canvas>
+        {% else %}
+            <a>No habits found for last week</a>
+        {% endif %}
+    </div>
     </div>
     <script>
          var xValues = [];
          var yValues = [];
-        {% for name in names %}
+        {% for name in namesToday %}
          xValues.push("{{ name }}");
         {% endfor %}
-         {% for duration in durations %}
+         {% for duration in durationsToday %}
          yValues.push({{ duration }});
          {% endfor %}
         var barColors = [
@@ -31,8 +52,44 @@
             "#bb5780"
         ];
 
+         var xValuesYesterday = [];
+         var yValuesYesterday = [];
+         {% for name in namesYesterday %}
+         xValuesYesterday.push("{{ name }}");
+         {% endfor %}
+         {% for duration in durationsYesterday %}
+         yValuesYesterday.push({{ duration }});
+         {% endfor %}
+         var barColors = [
+             "#b91d47",
+             "#00aba9",
+             "#2b5797",
+             "#e8c3b9",
+             "#1e7145",
+             "#bb5780"
+         ];
 
-         new Chart("myChart", {
+         var xValuesLastWeek = [];
+         var yValuesLastWeek = [];
+         {% for name in namesLastWeek %}
+         xValuesLastWeek.push("{{ name }}");
+         {% endfor %}
+         {% for duration in durationsLastWeek %}
+         yValuesLastWeek.push({{ duration }});
+         {% endfor %}
+         var barColors = [
+             "#b91d47",
+             "#00aba9",
+             "#2b5797",
+             "#e8c3b9",
+             "#1e7145",
+             "#bb5780"
+         ];
+
+
+
+
+         new Chart("myChartToday", {
             type: "pie",
             data: {
                 labels: xValues,
@@ -44,10 +101,44 @@
             options: {
                 title: {
                     display: true,
-                    text: "Habits statistics"
+                    text: "Habits statistics today"
                 }
             }
         });
+
+         new Chart("myChartYesterday", {
+             type: "pie",
+             data: {
+                 labels: xValuesYesterday,
+                 datasets: [{
+                     backgroundColor: barColors,
+                     data: yValuesYesterday
+                 }]
+             },
+             options: {
+                 title: {
+                     display: true,
+                     text: "Habits statistics yesterday"
+                 }
+             }
+         });
+
+         new Chart("myChartLastWeek", {
+             type: "pie",
+             data: {
+                 labels: xValuesLastWeek,
+                 datasets: [{
+                     backgroundColor: barColors,
+                     data: yValuesLastWeek
+                 }]
+             },
+             options: {
+                 title: {
+                     display: true,
+                     text: "Habits statistics last week"
+                 }
+             }
+         });
     </script>
 
 {% endblock %}

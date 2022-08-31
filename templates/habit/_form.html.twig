@@ -5,13 +5,11 @@
         {{ form_row(form.Name) }}
     </div>
     <div class="col">
+        <a>Minutes spent</a>
         {{ form_row(form.TimeSpent) }}
     </div>
     <div class="col">
         {{ form_row(form.TimeStart) }}
-    </div>
-    <div class="col">
-        {{ form_row(form.TimeEnd) }}
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 </div>

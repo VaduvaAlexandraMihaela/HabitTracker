@@ -22,16 +22,17 @@ class HabitController extends AbstractController
     #[Route('/', name: 'app_habit_index', methods: ['GET'])]
     public function index(HabitRepository $habitRepository): Response
     {
-
+        $userId = $this->getUser();
         return $this->render('habit/index.html.twig', [
-            'habitsYesterday' => $habitRepository->getHabitsYesterday(),
-            'habitsToday' => $habitRepository->getHabitsToday()
+            'habitsYesterday' => $habitRepository->getHabitsYesterday($userId),
+            'habitsToday' => $habitRepository->getHabitsToday($userId)
         ]);
     }
 
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws \Exception
      */
     #[Route('/new', name: 'app_habit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, HabitRepository $habitRepository, RecHabitRepository $recHabitRepository): Response
@@ -44,7 +45,7 @@ class HabitController extends AbstractController
         $user = $this->getUser();
         $habit->setUserId($user);
         if ($form->isSubmitted() && $form->isValid()) {
-            $habitRepository->add($habit, $recHabitRepository,true);
+            $habitRepository->add($habit, $recHabitRepository, true);
 
             return $this->redirectToRoute('app_habit_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -63,14 +64,17 @@ class HabitController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/{id}/edit', name: 'app_habit_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Habit $habit, HabitRepository $habitRepository): Response
+    public function edit(Request $request, Habit $habit, HabitRepository $habitRepository, RecHabitRepository $recHabitRepository): Response
     {
         $form = $this->createForm(HabitType::class, $habit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $habitRepository->add($habit, true);
+            $habitRepository->add($habit, $recHabitRepository, true);
 
             return $this->redirectToRoute('app_habit_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -94,8 +98,9 @@ class HabitController extends AbstractController
     #[Route('{/LastWeek}', name: 'app_habit_index_week_last', methods: ['GET'])]
     public function getHabitsLastWeek(HabitRepository $habitRepository): Response
     {
+        $userId = $this->getUser();
         return $this->render('habit/habit_index_week_last.html.twig', [
-            'habits' => $habitRepository->getHabitsLastWeek(),
+            'habits' => $habitRepository->getHabitsLastWeek($userId),
         ]);
     }
 }

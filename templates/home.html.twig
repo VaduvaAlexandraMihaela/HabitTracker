@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Weight{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron" style="margin-top: 20px; background-image : url({{ asset('../img/habit-banner.png') }});
+                background-size: cover;" > </div>
+    </div>
+    <main role="main">
+        <div class="container h-50">
+            <div class="jumbotron w-100" style="background:cadetblue !important" >
+                <div class="container h-70">
+                    <h1>Welcome to the habit tracker app!</h1>
+                    <a class="btn btn-secondary" href="{{ path('app_register') }}">Register</a> <a> or </a> <a class="btn btn-secondary" href="{{ path('app_login') }}">Login</a></div>
+                    <h1>Our application offers custom habit tracking and more.</h1>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

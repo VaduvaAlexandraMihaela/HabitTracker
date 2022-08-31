@@ -12,10 +12,15 @@ class HabitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Name')
-            ->add('TimeSpent')
-            ->add('TimeStart')
-            ->add('TimeEnd')
+            ->add('Name', null, [
+                'required'   => true
+            ])
+            ->add('TimeSpent',null, [
+                'required'   => true
+            ])
+            ->add('TimeStart',null, [
+                'required'   => true
+            ])
         ;
     }
 
