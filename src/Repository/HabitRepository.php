@@ -47,13 +47,15 @@ class HabitRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function setTimeEndWithInterval($habit) : Habit{
         $timeStart = $habit->getTimeStart();
         $duration = $habit->getTimeSpent();
         $minutes =  strval($duration);
-        $seconds = $minutes * 60;
-        $interval = new \DateInterval("PT" . $seconds . "S");
-        $timeEnd = $timeStart->add($interval);
+        $timeEnd = clone $timeStart;
+        $timeEnd = $timeEnd->modify("+{$minutes} minutes");
         $habit->setTimeEnd($timeEnd);
 
         return $habit;
